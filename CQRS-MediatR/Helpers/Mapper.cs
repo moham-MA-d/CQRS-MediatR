@@ -9,6 +9,7 @@ namespace CQRS_MediatR.Helpers
         {
             CreateMap<CreateProductRequest, Product>();
             CreateMap<Product, ProductResponse>();
+            CreateMap<CreateProductRequest, ProductResponse>();
         }
     }
 }
