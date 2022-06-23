@@ -1,10 +1,7 @@
-﻿using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using CQRS_MediatR.DTO;
+using MediatR;
 
 namespace CQRS_MediatR.Queries
 {
-	public record GetProductByIdQuery(int Id) : IRequest<Product>;
+    public record GetProductByIdQuery(int Id) : IRequest<ProductResponse>;
 }

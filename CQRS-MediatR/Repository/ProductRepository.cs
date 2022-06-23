@@ -35,9 +35,12 @@ namespace CQRS_MediatR.DataStore
 			var productResponseList =  _mapper.Map<List<ProductResponse>>(productList);
 			return productResponseList;
 		}
-		public async Task<Product> GetProductById(int id) => 
-			await Task.FromResult(_products.Single(p => p.Id == id));
-
+		public async Task<ProductResponse> GetProductById(int id)
+		{
+			var product = await Task.FromResult(_products.Single(p => p.Id == id));
+			var productResponse = _mapper.Map<ProductResponse>(product);
+			return productResponse;
+		}
 		public async Task EventOccured(Product product, string evt)
 		{
 			_products.Single(p => p.Id == product.Id).Name = $"{product.Name} evt: {evt}";

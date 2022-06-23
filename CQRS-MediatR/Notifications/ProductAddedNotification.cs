@@ -3,5 +3,5 @@ using MediatR;
 
 namespace CQRS_MediatR.Notifications
 {
-	public record ProductAddedNotification(CreateProductRequest Product) : INotification;
+	public record ProductAddedNotification(ProductResponse Product) : INotification;
 }

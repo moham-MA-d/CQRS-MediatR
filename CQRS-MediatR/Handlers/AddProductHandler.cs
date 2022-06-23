@@ -1,4 +1,5 @@
-﻿using CQRS_MediatR.Commands;
+﻿using AutoMapper;
+using CQRS_MediatR.Commands;
 using CQRS_MediatR.DataStore;
 using CQRS_MediatR.DTO;
 using MediatR;
@@ -13,9 +14,9 @@ namespace CQRS_MediatR.Handlers
     // Unit: in MediatR Unit represents a void type.
     //public class AddProductHandler : IRequestHandler<AddProductCommand, Unit>
     //{
-    //	private readonly FakeDataStore _productDataStore;
+    //	private readonly ProductDataStore _productDataStore;
 
-    //	public AddProductHandler(FakeDataStore productDataStore) => _productDataStore = productDataStore;
+    //	public AddProductHandler(ProductDataStore productDataStore) => _productDataStore = productDataStore;
 
     //	public async Task<Unit> Handle(AddProductCommand request, CancellationToken cancellationToken)
     //	{
@@ -26,17 +27,22 @@ namespace CQRS_MediatR.Handlers
     //	}
     //}
 
-    public class AddProductHandler : IRequestHandler<AddProductCommand, CreateProductRequest>
+    public class AddProductHandler : IRequestHandler<AddProductCommand, ProductResponse>
     {
         private readonly ProductDataStore _productDataStore;
+        private readonly IMapper _mapper;
 
-        public AddProductHandler(ProductDataStore productDataStore) => _productDataStore = productDataStore;
+        public AddProductHandler(ProductDataStore productDataStore, IMapper mapper)
+        {
+            _productDataStore = productDataStore;
+            _mapper = mapper;
+        } 
 
-        public async Task<CreateProductRequest> Handle(AddProductCommand request, CancellationToken cancellationToken)
+        public async Task<ProductResponse> Handle(AddProductCommand request, CancellationToken cancellationToken)
         {
             await _productDataStore.AddProduct(request.Product);
-
-            return request.Product;
+            var p = _mapper.Map<ProductResponse>(request.Product);
+            return p;
         }
     }
 }
